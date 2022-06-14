@@ -1,4 +1,4 @@
-export default [
+const ru = [
   'Ф',
   'И',
   'С',
@@ -75,3 +75,5 @@ export default [
   '/',
   ' ',
 ]
+
+export default ru

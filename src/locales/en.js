@@ -1,4 +1,4 @@
-export default [
+const en = [
   'A',
   'B',
   'C',
@@ -75,3 +75,5 @@ export default [
   '|',
   ' ',
 ]
+
+export default en
