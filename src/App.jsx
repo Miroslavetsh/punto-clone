@@ -3,9 +3,11 @@ import Typewriter from 'typewriter-effect'
 
 import ru from './locales/ru.js'
 import en from './locales/en.js'
+import copyIcon from './img/copy-svgrepo-com.svg'
 
 const App = () => {
   const [text, setText] = useState('')
+  const [hintVisible, setHintVisible] = useState(false)
 
   const main = useMemo(() => {
     let locale = /[A-Za-z]/.test(text[0]) ? en : /[А-Яа-я]/.test(text[0]) ? ru : null
@@ -16,6 +18,14 @@ const App = () => {
 
   const hideTypewriterCursor = () => {
     document && (document.querySelector('.Typewriter__cursor').style.visibility = 'hidden')
+  }
+
+  const showHint = () => {
+    setHintVisible(true)
+
+    setTimeout(() => {
+      setHintVisible(false)
+    }, 3000)
   }
 
   return (
@@ -34,13 +44,31 @@ const App = () => {
         />
       </p>
 
-      <input
+      <textarea
+        cols={100}
+        rows={8}
+        resize='none'
         type='text'
         placeholder='Вставь неправильный текст в английской или русской раскладке'
         onChange={(e) => setText(e.target.value.trim())}
       />
 
-      <div>{main}</div>
+      {main && (
+        <div>
+          <span>{main}</span>
+
+          <span
+            onClick={() => {
+              navigator && navigator.clipboard.writeText(main)
+              showHint()
+            }}
+            style={{ cursor: 'pointer', paddingLeft: 3 }}>
+            <img style={{ width: '20px' }} src={copyIcon} alt='copy' />
+          </span>
+
+          {hintVisible && <span>Скопировал</span>}
+        </div>
+      )}
     </div>
   )
 }
