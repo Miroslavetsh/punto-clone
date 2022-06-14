@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Typewriter from 'typewriter-effect'
 
 import ru from './locales/ru.js'
 import en from './locales/en.js'
@@ -13,9 +14,25 @@ const App = () => {
     return text.split('').reduce((res, c) => (res += localeOn[locale.indexOf(c)]), '')
   }, [text])
 
+  const hideTypewriterCursor = () => {
+    document && (document.querySelector('.Typewriter__cursor').style.visibility = 'hidden')
+  }
+
   return (
     <div>
-      <p>Напечатал что-то не то?</p>
+      <p>
+        <Typewriter
+          onInit={(typewriter) => {
+            typewriter
+              .typeString('Yfgtxfnfk xnj-nj yt nj&')
+              .pauseFor(1400)
+              .deleteAll()
+              .typeString('Напечатал что-то не то?')
+              .callFunction(hideTypewriterCursor)
+              .start()
+          }}
+        />
+      </p>
 
       <input
         type='text'
