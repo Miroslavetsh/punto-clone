@@ -13,7 +13,7 @@ const App = () => {
     let locale = /[A-Za-z]/.test(text[0]) ? en : /[А-Яа-я]/.test(text[0]) ? ru : null
     let localeOn = /[A-Za-z]/.test(text[0]) ? ru : /[А-Яа-я]/.test(text[0]) ? en : null
 
-    return text.split('').reduce((res, c) => (res += localeOn[locale.indexOf(c)]), '')
+    return text.split('').reduce((res, c) => (res += localeOn[locale.indexOf(c)] || c), '')
   }, [text])
 
   const hideTypewriterCursor = () => {
@@ -25,7 +25,7 @@ const App = () => {
 
     setTimeout(() => {
       setHintVisible(false)
-    }, 3000)
+    }, 1000)
   }
 
   return (
@@ -55,7 +55,7 @@ const App = () => {
 
       {main && (
         <div>
-          <span>{main}</span>
+          <span data-testid='resultText'>{main}</span>
 
           <span
             onClick={() => {
@@ -66,7 +66,7 @@ const App = () => {
             <img style={{ width: '20px' }} src={copyIcon} alt='copy' />
           </span>
 
-          {hintVisible && <span>Скопировал</span>}
+          {hintVisible && <span>Скопировал!</span>}
         </div>
       )}
     </div>
